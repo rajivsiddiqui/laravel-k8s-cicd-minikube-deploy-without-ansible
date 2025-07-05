@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  app:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # image: laravel-app
+    image: devopssteps/laravel-app:latest
+    container_name: laravel-app
+    # volumes:
+    #   - ./app:/var/www
+    depends_on:
+      - db
+    networks:
+      - laravel
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=larademo
+      - DB_USERNAME=rajiv
+      - DB_PASSWORD=1234
+    
+
+  nginx:
+    # build:
+    #   context: .
+    #   dockerfile: dockerfile/nginx.dockerfile
+    # image: laravel-nginx
+    #image: nginx:alpine
+    image: devopssteps/laravel-nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    # volumes:
+    #   - ./app:/var/www
+    #   - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: larademo
+      MYSQL_USER: rajiv
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+
+volumes:
+  mysql-data:
+
+networks:
+  laravel:

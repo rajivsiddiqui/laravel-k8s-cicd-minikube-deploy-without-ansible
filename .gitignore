@@ -1,7 +1,8 @@
- ansible/ 
-app/
+#app/
 ansible/
 k8s-jenkins-kubeconfig-setup.zip
 kubeconfig
 run-pod.sh*
 ci/
+app/node_modules/
+app/vendor/
