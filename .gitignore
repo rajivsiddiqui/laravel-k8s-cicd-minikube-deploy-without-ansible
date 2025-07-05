@@ -1,0 +1,7 @@
+ ansible/ 
+app/
+ansible/
+k8s-jenkins-kubeconfig-setup.zip
+kubeconfig
+run-pod.sh*
+ci/
